@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   TextInput,
-  TouchableOpacity,
   ActivityIndicator,
   Alert,
 } from 'react-native';
@@ -12,6 +11,8 @@ import {NavigationProp, ParamListBase} from '@react-navigation/native';
 import axios from 'axios';
 import AppBar from '../Navigators/AppBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Colors from '../Constants/Colors';
+import CustomButton from '../UIComponents/CustomButton';
 
 const apiKey = '6QaguSak47jKcQTU26GBRVVBxYwcVsYirSKM7Erq';
 
@@ -72,7 +73,6 @@ export default class Asteroid extends Component<Props, State> {
         const data: any = res.data;
         this.props.navigation.navigate('Info', {data: data});
         this.setState({
-          // asteroidID: '',
           loading: false,
         });
       })
@@ -110,7 +110,7 @@ export default class Asteroid extends Component<Props, State> {
   lastBtn = {
     title: 'Logout',
     onPress: this.handleLogout,
-    backgroundColor: {backgroundColor: '#ff2852'},
+    backgroundColor: Colors.danger,
   };
 
   render() {
@@ -136,16 +136,14 @@ export default class Asteroid extends Component<Props, State> {
                 style={styles.textInputStyle}
                 onChangeText={this.handleonChangeAsteroidId}
               />
-              <TouchableOpacity
-                style={styles.randomButtonStyle}
-                onPress={this.onClickRandom}>
-                <Text style={styles.buttonTextStyle}>Random</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.buttonStyle}
-                onPress={this.handleSubmit}>
-                <Text style={styles.buttonTextStyle}>Submit</Text>
-              </TouchableOpacity>
+              <View>
+                <CustomButton
+                  onPress={this.onClickRandom}
+                  backgroundColor={Colors.buttonSecondary}>
+                  Random
+                </CustomButton>
+                <CustomButton onPress={this.handleSubmit}>Submit</CustomButton>
+              </View>
             </View>
           )}
         </View>
@@ -161,10 +159,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   appbar: {
-    backgroundColor: '#415A77',
+    backgroundColor: Colors.secondary,
   },
   subContainer: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.cardBackground,
     padding: 38,
     margin: 10,
     borderRadius: 8,
@@ -184,24 +182,12 @@ const styles = StyleSheet.create({
   textInputStyle: {
     padding: 10,
     height: 40,
-    borderColor: 'gray',
+    borderColor: Colors.inputBorder,
     borderWidth: 1,
     borderRadius: 5,
     fontSize: 16,
   },
-  buttonStyle: {
-    borderRadius: 5,
-    marginTop: 20,
-    backgroundColor: '#8887ff',
-    padding: 7,
-    alignItems: 'center',
-  },
   randomButtonStyle: {
-    borderRadius: 5,
-    marginTop: 20,
-    backgroundColor: '#524873',
-    padding: 7,
-    alignItems: 'center',
+    backgroundColor: Colors.buttonSecondary,
   },
-  buttonTextStyle: {color: 'white', fontWeight: '600'},
 });

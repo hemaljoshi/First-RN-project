@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/BaiJamjuree-Bold.ttf",
+      "sha1": "50088f5f00a63964bc0d98d82924dc5ff4a5645c"
+    },
+    {
+      "path": "assets/fonts/DancingScript-Bold.ttf",
+      "sha1": "a523e308ecde38ad62a836024598e21bcfd89876"
+    }
+  ]
+}

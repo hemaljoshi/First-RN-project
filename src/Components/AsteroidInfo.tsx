@@ -1,4 +1,4 @@
-import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {Text, StyleSheet, View} from 'react-native';
 import React, {Component} from 'react';
 import {
   NavigationProp,
@@ -7,6 +7,9 @@ import {
 } from '@react-navigation/native';
 import AppBar from '../Navigators/AppBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Colors from '../Constants/Colors';
+import Card from '../UIComponents/Card';
+import CustomButton from '../UIComponents/CustomButton';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
@@ -36,7 +39,7 @@ export default class AsteroidInfo extends Component<Props> {
       <>
         <AppBar firstBtn={this.firstBtn} title="Asteroid Info" />
         <View style={styles.container}>
-          <View style={styles.subContainer}>
+          <Card>
             <Text style={styles.titleStyle}>Asteroid Data</Text>
             <Text style={styles.textStyle}>Name: {data?.name}</Text>
             <Text style={styles.textStyle}>
@@ -46,17 +49,19 @@ export default class AsteroidInfo extends Component<Props> {
               Is potentially hazardous asteroid:{' '}
               {` ${data?.is_potentially_hazardous_asteroid}`}
             </Text>
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              onPress={() => goBack()}>
-              <Text style={styles.buttonTextStyle}>Go Back</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.logouButtonStyle}
-              onPress={this.handleLogout}>
-              <Text style={styles.buttonTextStyle}>Logout</Text>
-            </TouchableOpacity>
-          </View>
+            <View>
+              <CustomButton
+                backgroundColor={Colors.success}
+                onPress={() => goBack()}>
+                Go Back
+              </CustomButton>
+              <CustomButton
+                onPress={this.handleLogout}
+                backgroundColor={Colors.danger}>
+                Logout
+              </CustomButton>
+            </View>
+          </Card>
         </View>
       </>
     );
@@ -70,7 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   subContainer: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.cardBackground,
     padding: 38,
     margin: 10,
     borderRadius: 8,
@@ -91,19 +96,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 5,
   },
-  buttonStyle: {
-    borderRadius: 5,
-    marginTop: 20,
-    backgroundColor: '#4cb742',
-    padding: 7,
-    alignItems: 'center',
-  },
   logouButtonStyle: {
     borderRadius: 5,
     marginTop: 20,
-    backgroundColor: '#ff2852',
+    backgroundColor: Colors.danger,
     padding: 7,
     alignItems: 'center',
   },
-  buttonTextStyle: {color: 'white', fontWeight: '600'},
 });

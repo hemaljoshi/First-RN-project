@@ -2,8 +2,6 @@ import {
   Image,
   Platform,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
   Dimensions,
   FlatList,
@@ -14,6 +12,7 @@ import DocumentPicker from 'react-native-document-picker';
 import AppBar from '../Navigators/AppBar';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import CustomButton from '../UIComponents/CustomButton';
 
 const {height, width} = Dimensions.get('window');
 
@@ -120,21 +119,15 @@ export default class Upload extends Component<Props, State> {
       <>
         <AppBar title="Upload" firstBtn={this.firstBtn} />
         <View style={styles.content}>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={this.selectFile}>
-            <Text style={styles.buttonTextStyle}>Select 📑</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={this.launchImageLibrary}>
-            <Text style={styles.buttonTextStyle}>launch Image Library </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={this.captureImage}>
-            <Text style={styles.buttonTextStyle}>launch Camera </Text>
-          </TouchableOpacity>
+          <CustomButton onPress={this.selectFile} width="40%">
+            Select 📑
+          </CustomButton>
+          <CustomButton onPress={this.launchImageLibrary} width="40%">
+            launch Image Library
+          </CustomButton>
+          <CustomButton onPress={this.captureImage} width="40%">
+            launch Camera
+          </CustomButton>
           <FlatList
             data={this.state.file}
             renderItem={({item, index}) => (
@@ -172,15 +165,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttonStyle: {
-    width: '40%',
-    borderRadius: 5,
-    marginVertical: 10,
-    backgroundColor: '#8887ff',
-    padding: 7,
-    alignItems: 'center',
-  },
-  buttonTextStyle: {color: 'white', fontWeight: '600'},
   imageStyle: {height: '100%', width: '100%'},
   imageViewStyle: {
     width: width - 50,

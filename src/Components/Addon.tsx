@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {Component} from 'react';
+import Colors from '../Constants/Colors';
 import AppBar from '../Navigators/AppBar';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
 import {default as DatePickerIos} from 'react-native-datepicker';
@@ -160,21 +161,26 @@ const styles = StyleSheet.create({
     width: '40%',
     borderRadius: 5,
     marginVertical: 10,
-    backgroundColor: '#8887ff',
+    backgroundColor: Colors.buttonPrimary,
     padding: 7,
     alignItems: 'center',
   },
-  buttonTextStyle: {color: 'white', fontWeight: '600'},
+  buttonTextStyle: {
+    fontFamily: 'Pacifico-Regular',
+    color: Colors.buttonText,
+    fontWeight: '500',
+  },
   box: {
     marginTop: 10,
   },
   titletext: {
-    color: 'grey',
-    fontWeight: '800',
+    fontFamily: 'DancingScript-Bold',
+    color: Colors.primaryText,
+    fontWeight: 'bold',
   },
   dateView: {
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: Colors.cardBackground,
     margin: 5,
     borderRadius: 5,
     flexDirection: 'row',

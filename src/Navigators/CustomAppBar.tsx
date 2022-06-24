@@ -1,97 +1,60 @@
-import {
-  StyleProp,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React, {Component} from 'react';
 import CustomStatusBar from '../Components/CustomStatusBar';
-import Colors from '../Constants/Colors';
+import CustomButton from '../UIComponents/CustomButton';
 
 interface Props {
   style?: any;
   firstBtn?: {
     title: string;
     onPress: () => void;
-    color?: string;
-    backgroundColor?: string;
+    color?: string | undefined;
+    backgroundColor?: string | undefined;
   };
   title: string;
-  headerTitleStyle?: StyleProp<ViewStyle>;
-  headerTitleColor?: string;
+  headerTitleStyle?: {color: string};
   lastBtn?: {
     title: string;
     onPress: () => void;
-    color?: string;
-    backgroundColor?: string;
+    color?: string | undefined;
+    backgroundColor?: string | undefined;
   };
 }
 export default class AppBar extends Component<Props> {
-  firstBtnbackgroundColor = {
-    backgroundColor: this.props.firstBtn?.backgroundColor
-      ? this.props.firstBtn?.backgroundColor
-      : Colors.buttonPrimary,
-  };
-  lastBtnbackgroundColor = {
-    backgroundColor: this.props.lastBtn?.backgroundColor
-      ? this.props.lastBtn?.backgroundColor
-      : Colors.buttonPrimary,
-  };
-  lastBtnColor = {
-    color: this.props.lastBtn?.color
-      ? this.props.lastBtn?.color
-      : Colors.buttonText,
-  };
-  firstBtnColor = {
-    color: this.props.lastBtn?.color
-      ? this.props.lastBtn?.color
-      : Colors.buttonText,
-  };
-  headerTitleColor = {
-    color: this.props.headerTitleColor ? this.props.headerTitleColor : 'white',
-  };
   render() {
     const {title, firstBtn, headerTitleStyle, lastBtn, style} = this.props;
+    console.log(lastBtn?.title);
     return (
       <>
         <CustomStatusBar
           backgroundColor={style ? style.backgroundColor : '#724E91'}
           barStyle="light-content"
         />
-        <View style={[styles.container, style && style]}>
+        <View style={{...styles.container, ...style}}>
           <View style={styles.subContainer}>
             {firstBtn && (
               <View style={styles.firstButtonView}>
-                <TouchableOpacity
-                  style={[styles.buttonStyle, this.firstBtnbackgroundColor]}
+                <CustomButton
+                  backgroundColor={firstBtn.backgroundColor}
+                  color={firstBtn.color}
                   onPress={firstBtn?.onPress}>
-                  <Text style={[styles.buttonTextStyle, this.firstBtnColor]}>
-                    {firstBtn?.title}
-                  </Text>
-                </TouchableOpacity>
+                  {firstBtn.title}
+                </CustomButton>
               </View>
             )}
             <View style={styles.headerTitle}>
-              <Text
-                style={[
-                  styles.headerTitleText,
-                  headerTitleStyle,
-                  this.headerTitleColor,
-                ]}>
+              <Text style={{...styles.headerTitleText, ...headerTitleStyle}}>
                 {title}
               </Text>
             </View>
             {lastBtn && (
               <View style={styles.lastButtonView}>
-                <TouchableOpacity
-                  style={[styles.buttonStyle, this.lastBtnbackgroundColor]}
+                <CustomButton
+                  backgroundColor={lastBtn.backgroundColor}
+                  color={lastBtn.color}
                   onPress={lastBtn?.onPress}>
-                  <Text style={[styles.buttonTextStyle, this.lastBtnColor]}>
-                    {lastBtn?.title}
-                  </Text>
-                </TouchableOpacity>
+                  {lastBtn?.title}
+                </CustomButton>
               </View>
             )}
           </View>

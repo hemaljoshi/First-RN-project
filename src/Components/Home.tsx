@@ -1,8 +1,9 @@
-import {StyleSheet, Text, TouchableOpacity, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, SafeAreaView} from 'react-native';
 import React, {Component} from 'react';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomStatusBar from './CustomStatusBar';
+import CustomButton from '../UIComponents/CustomButton';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
@@ -23,11 +24,9 @@ export default class Home extends Component<Props> {
         <CustomStatusBar />
         <SafeAreaView style={styles.container}>
           <Text>Hello Welcome!</Text>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={this.handleOnPress}>
-            <Text style={styles.buttonTextStyle}>Login</Text>
-          </TouchableOpacity>
+          <CustomButton onPress={this.handleOnPress} width="40%">
+            Login
+          </CustomButton>
         </SafeAreaView>
       </>
     );
@@ -40,13 +39,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttonStyle: {
-    width: '50%',
-    borderRadius: 5,
-    marginTop: 20,
-    backgroundColor: '#4cb742',
-    padding: 7,
-    alignItems: 'center',
-  },
-  buttonTextStyle: {color: 'white', fontWeight: '600'},
 });
