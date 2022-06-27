@@ -4,12 +4,16 @@ import {NavigationProp, ParamListBase} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomStatusBar from './CustomStatusBar';
 import CustomButton from '../UIComponents/CustomButton';
+import ThemeContext, {Theme} from '../Context/ThemeContext';
+import {useContextHOC} from '../Context/useContextHOC';
 
 interface Props {
+  context: Theme | null;
   navigation: NavigationProp<ParamListBase>;
 }
 
-export default class Home extends Component<Props> {
+class Home extends Component<Props> {
+  static contextType = ThemeContext;
   handleOnPress = async () => {
     try {
       await AsyncStorage.setItem('token', 'temp123');
@@ -19,6 +23,17 @@ export default class Home extends Component<Props> {
     }
   };
   render() {
+    const colors = this.props.context?.colors;
+    console.log(colors);
+    console.log('home', colors);
+    const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors?.themeColor.background,
+      },
+    });
     return (
       <>
         <CustomStatusBar />
@@ -33,10 +48,5 @@ export default class Home extends Component<Props> {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+// eslint-disable-next-line react-hooks/rules-of-hooks
+export default useContextHOC(Home);

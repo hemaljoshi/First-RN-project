@@ -13,6 +13,7 @@ import AppBar from '../Navigators/AppBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Colors from '../Constants/Colors';
 import CustomButton from '../UIComponents/CustomButton';
+import ThemeContext, {Theme} from '../Context/ThemeContext';
 
 const apiKey = '6QaguSak47jKcQTU26GBRVVBxYwcVsYirSKM7Erq';
 
@@ -25,6 +26,7 @@ interface State {
 }
 
 export default class Asteroid extends Component<Props, State> {
+  static contextType = ThemeContext;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -32,7 +34,6 @@ export default class Asteroid extends Component<Props, State> {
       loading: false,
     };
   }
-
   handleonChangeAsteroidId = (text: string) => {
     this.setState({
       asteroidID: text,
@@ -114,7 +115,49 @@ export default class Asteroid extends Component<Props, State> {
   };
 
   render() {
+    const {colors, toogleTheme} = this.context as Theme;
     const {loading, asteroidID} = this.state;
+    const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.themeColor.background,
+      },
+      appbar: {
+        backgroundColor: colors.themeColor.secondary,
+      },
+      subContainer: {
+        backgroundColor: colors.themeColor.cardBackground,
+        padding: 38,
+        margin: 10,
+        borderRadius: 8,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        elevation: 6,
+      },
+      titleText: {
+        color: colors.themeColor.primaryText,
+        fontSize: 28,
+        marginBottom: 5,
+      },
+      textInputStyle: {
+        padding: 10,
+        height: 40,
+        borderColor: colors.themeColor.inputBorder,
+        borderWidth: 1,
+        borderRadius: 5,
+        fontSize: 16,
+      },
+      randomButtonStyle: {
+        backgroundColor: colors.themeColor.buttonSecondary,
+      },
+    });
     return (
       <>
         <AppBar
@@ -139,10 +182,12 @@ export default class Asteroid extends Component<Props, State> {
               <View>
                 <CustomButton
                   onPress={this.onClickRandom}
-                  backgroundColor={Colors.buttonSecondary}>
+                  backgroundColor={colors.themeColor.buttonSecondary}
+                  color={colors.themeColor.buttonText}>
                   Random
                 </CustomButton>
                 <CustomButton onPress={this.handleSubmit}>Submit</CustomButton>
+                <CustomButton onPress={toogleTheme}>Toogle Theme</CustomButton>
               </View>
             </View>
           )}
@@ -151,43 +196,3 @@ export default class Asteroid extends Component<Props, State> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  appbar: {
-    backgroundColor: Colors.secondary,
-  },
-  subContainer: {
-    backgroundColor: Colors.cardBackground,
-    padding: 38,
-    margin: 10,
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
-  },
-  titleText: {
-    fontSize: 28,
-    marginBottom: 5,
-  },
-  textInputStyle: {
-    padding: 10,
-    height: 40,
-    borderColor: Colors.inputBorder,
-    borderWidth: 1,
-    borderRadius: 5,
-    fontSize: 16,
-  },
-  randomButtonStyle: {
-    backgroundColor: Colors.buttonSecondary,
-  },
-});

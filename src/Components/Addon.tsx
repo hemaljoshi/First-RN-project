@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {Component} from 'react';
-import Colors from '../Constants/Colors';
 import AppBar from '../Navigators/AppBar';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
 import {default as DatePickerIos} from 'react-native-datepicker';
@@ -10,6 +9,8 @@ import {
   DateTimePickerAndroid,
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
+import ThemeContext, {Theme} from '../Context/ThemeContext';
+
 interface Props {
   navigation: NavigationProp<ParamListBase>;
 }
@@ -21,6 +22,7 @@ interface State {
   showPicker: boolean;
 }
 export default class Addon extends Component<Props, State> {
+  static contextType = ThemeContext;
   state: State = {
     date: new Date(1598051730000),
     dob: '2016-05-15',
@@ -62,7 +64,55 @@ export default class Addon extends Component<Props, State> {
   };
 
   render() {
+    const {colors} = this.context as Theme;
     const {date, dob} = this.state;
+    const styles = StyleSheet.create({
+      content: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.themeColor.background,
+      },
+      buttonStyle: {
+        width: '40%',
+        borderRadius: 5,
+        marginVertical: 10,
+        backgroundColor: colors.themeColor.buttonPrimary,
+        padding: 7,
+        alignItems: 'center',
+      },
+      buttonTextStyle: {
+        fontFamily: 'Pacifico-Regular',
+        color: colors.themeColor.buttonText,
+        fontWeight: '500',
+      },
+      box: {
+        marginTop: 10,
+      },
+      titletext: {
+        fontFamily: 'BaiJamjuree-Bold',
+        color: colors.themeColor.primaryText,
+      },
+      dateView: {
+        padding: 10,
+        backgroundColor: colors.themeColor.cardBackground,
+        margin: 5,
+        borderRadius: 5,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.05,
+        shadowRadius: 4.65,
+        elevation: 2,
+      },
+      text: {
+        color: colors.themeColor.primaryText,
+      },
+    });
     return (
       <>
         <AppBar title="Addons" firstBtn={this.firstBtn} />
@@ -111,6 +161,9 @@ export default class Addon extends Component<Props, State> {
                   dateInput: {
                     marginLeft: 36,
                   },
+                  dateText: {
+                    color: colors.themeColor.primaryText,
+                  },
                 }}
                 onDateChange={dates => {
                   this.setState({dob: dates});
@@ -137,12 +190,12 @@ export default class Addon extends Component<Props, State> {
             {Platform.OS === 'ios' && (
               <View style={styles.dateView}>
                 <Text style={styles.titletext}>IOS only:</Text>
-                <Text>{dob}</Text>
+                <Text style={styles.text}>{dob}</Text>
               </View>
             )}
             <View style={styles.dateView}>
               <Text style={styles.titletext}>IOS & Android Both: </Text>
-              <Text>{date.toLocaleString()}</Text>
+              <Text style={styles.text}>{date.toLocaleString()}</Text>
             </View>
           </View>
         </View>
@@ -150,48 +203,3 @@ export default class Addon extends Component<Props, State> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonStyle: {
-    width: '40%',
-    borderRadius: 5,
-    marginVertical: 10,
-    backgroundColor: Colors.buttonPrimary,
-    padding: 7,
-    alignItems: 'center',
-  },
-  buttonTextStyle: {
-    fontFamily: 'Pacifico-Regular',
-    color: Colors.buttonText,
-    fontWeight: '500',
-  },
-  box: {
-    marginTop: 10,
-  },
-  titletext: {
-    fontFamily: 'DancingScript-Bold',
-    color: Colors.primaryText,
-    fontWeight: 'bold',
-  },
-  dateView: {
-    padding: 10,
-    backgroundColor: Colors.cardBackground,
-    margin: 5,
-    borderRadius: 5,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.05,
-    shadowRadius: 4.65,
-    elevation: 2,
-  },
-});

@@ -6,13 +6,23 @@ import AsteroidInfo from '../Components/AsteroidInfo';
 import InfoIcon from '../Icons/InfoIcon';
 import Upload from '../Components/Upload';
 import Addon from '../Components/Addon';
+import ThemeContext, {
+  Theme,
+  ThemeContextProvider,
+} from '../Context/ThemeContext';
 
 const BootomTab = createBottomTabNavigator();
 
-export default class BottomTabs extends Component {
+class BottomTabs extends Component {
+  static contextType = ThemeContext;
   render() {
+    const {colors} = this.context as Theme;
     return (
-      <BootomTab.Navigator screenOptions={{headerShown: false}}>
+      <BootomTab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {backgroundColor: colors?.themeColor.background},
+        }}>
         <BootomTab.Screen
           name="Home"
           component={Asteroid}
@@ -53,3 +63,10 @@ export default class BottomTabs extends Component {
     );
   }
 }
+export default () => {
+  return (
+    <ThemeContextProvider>
+      <BottomTabs />
+    </ThemeContextProvider>
+  );
+};

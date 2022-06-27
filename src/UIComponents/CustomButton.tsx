@@ -7,8 +7,10 @@ import {
   StyleProp,
 } from 'react-native';
 import React, {Component} from 'react';
-import Colors from '../Constants/Colors';
+import {useContextHOC} from '../Context/useContextHOC';
+import {Theme} from '../Context/ThemeContext';
 interface Props {
+  context: Theme | null;
   children?: React.ReactNode;
   buttonStyle?: StyleProp<ViewStyle>;
   backgroundColor?: string;
@@ -17,30 +19,41 @@ interface Props {
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
   width?: string | number;
 }
-export default class CustomButton extends Component<Props> {
-  backgroundColor = {
-    backgroundColor: this.props.backgroundColor
-      ? this.props.backgroundColor
-      : Colors.buttonPrimary,
-  };
-  color = {
-    color: this.props.color ? this.props.color : Colors.buttonText,
-  };
-  width = {
-    width: this.props.width ? this.props.width : '100%',
-  };
+class CustomButton extends Component<Props> {
   render() {
+    const colors = this.props.context?.colors;
     const {buttonStyle, buttonTextStyle, onPress} = this.props;
+    const styles = StyleSheet.create({
+      buttonStyle: {
+        borderRadius: 5,
+        marginTop: 20,
+        backgroundColor: colors?.themeColor.buttonPrimary,
+        padding: 7,
+        alignItems: 'center',
+      },
+      buttonTextStyle: {
+        color: colors?.themeColor.buttonText,
+        fontWeight: '600',
+      },
+    });
+    const backgroundColor = {
+      backgroundColor: this.props.backgroundColor
+        ? this.props.backgroundColor
+        : colors?.themeColor.buttonPrimary,
+    };
+    const color = {
+      color: this.props.color
+        ? this.props.color
+        : colors?.themeColor.buttonText,
+    };
+    const width = {
+      width: this.props.width ? this.props.width : '100%',
+    };
     return (
       <TouchableOpacity
-        style={[
-          styles.buttonStyle,
-          buttonStyle,
-          this.backgroundColor,
-          this.width,
-        ]}
+        style={[styles.buttonStyle, buttonStyle, backgroundColor, width]}
         onPress={onPress}>
-        <Text style={[styles.buttonTextStyle, buttonTextStyle, this.color]}>
+        <Text style={[styles.buttonTextStyle, buttonTextStyle, color]}>
           {this.props.children}
         </Text>
       </TouchableOpacity>
@@ -48,13 +61,5 @@ export default class CustomButton extends Component<Props> {
   }
 }
 
-const styles = StyleSheet.create({
-  buttonStyle: {
-    borderRadius: 5,
-    marginTop: 20,
-    backgroundColor: Colors.buttonPrimary,
-    padding: 7,
-    alignItems: 'center',
-  },
-  buttonTextStyle: {color: Colors.buttonText, fontWeight: '600'},
-});
+// eslint-disable-next-line react-hooks/rules-of-hooks
+export default useContextHOC(CustomButton);

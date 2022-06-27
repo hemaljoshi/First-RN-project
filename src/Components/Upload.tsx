@@ -13,6 +13,7 @@ import AppBar from '../Navigators/AppBar';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import CustomButton from '../UIComponents/CustomButton';
+import ThemeContext, {Theme} from '../Context/ThemeContext';
 
 const {height, width} = Dimensions.get('window');
 
@@ -25,6 +26,7 @@ interface State {
   resourcePath: string;
 }
 export default class Upload extends Component<Props, State> {
+  static contextType = ThemeContext;
   state: State = {
     fileName: '',
     file: [],
@@ -115,6 +117,20 @@ export default class Upload extends Component<Props, State> {
     });
   };
   render() {
+    const {colors} = this.context as Theme;
+    const styles = StyleSheet.create({
+      content: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.themeColor.background,
+      },
+      imageStyle: {height: '100%', width: '100%'},
+      imageViewStyle: {
+        width: width - 50,
+        height: height,
+      },
+    });
     return (
       <>
         <AppBar title="Upload" firstBtn={this.firstBtn} />
@@ -158,16 +174,3 @@ export default class Upload extends Component<Props, State> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  imageStyle: {height: '100%', width: '100%'},
-  imageViewStyle: {
-    width: width - 50,
-    height: height,
-  },
-});
