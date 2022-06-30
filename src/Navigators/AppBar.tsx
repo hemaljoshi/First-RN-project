@@ -54,6 +54,14 @@ export default class AppBar extends Component<Props> {
   };
   render() {
     const {title, firstBtn, headerTitleStyle, lastBtn, style} = this.props;
+    const dynamicStyles = StyleSheet.create({
+      headerTitle: {
+        width: firstBtn ? '40%' : '100%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        textAlign: 'center',
+      },
+    });
     return (
       <>
         <CustomStatusBar
@@ -73,7 +81,7 @@ export default class AppBar extends Component<Props> {
                 </TouchableOpacity>
               </View>
             )}
-            <View style={styles.headerTitle}>
+            <View style={dynamicStyles.headerTitle}>
               <Text
                 style={[
                   styles.headerTitleText,
@@ -100,7 +108,6 @@ export default class AppBar extends Component<Props> {
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#724E91',
@@ -131,11 +138,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonTextStyle: {color: 'white', fontWeight: '600'},
-  headerTitle: {
-    width: '40%',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
   headerTitleText: {
     color: 'white',
     fontSize: 18,

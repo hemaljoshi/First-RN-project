@@ -24,8 +24,6 @@ class Home extends Component<Props> {
   };
   render() {
     const colors = this.props.context?.colors;
-    console.log(colors);
-    console.log('home', colors);
     const styles = StyleSheet.create({
       container: {
         flex: 1,
@@ -33,12 +31,15 @@ class Home extends Component<Props> {
         alignItems: 'center',
         backgroundColor: colors?.themeColor.background,
       },
+      title: {
+        color: colors?.themeColor.titleFont,
+      },
     });
     return (
       <>
         <CustomStatusBar />
         <SafeAreaView style={styles.container}>
-          <Text>Hello Welcome!</Text>
+          <Text style={styles.title}>Hello Welcome!</Text>
           <CustomButton onPress={this.handleOnPress} width="40%">
             Login
           </CustomButton>

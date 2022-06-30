@@ -1,4 +1,4 @@
-import {Alert, Image, StyleSheet, View} from 'react-native';
+import {Alert, Image, Platform, StyleSheet, View} from 'react-native';
 import React, {Component} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
@@ -11,7 +11,7 @@ export default class Splash extends Component<Props> {
   getData = async () => {
     try {
       const value = await AsyncStorage.getItem('token');
-      console.log(value);
+      console.log('AsyncStorage Token : ', value);
       if (value !== null) {
         this.props.navigation.navigate('tabs');
       } else {
@@ -23,8 +23,9 @@ export default class Splash extends Component<Props> {
   };
   componentDidMount() {
     NetInfo.fetch().then(state => {
-      console.log('Connection type', state.type);
-      console.log('Is connected?', state.isConnected);
+      console.log('Platform : ', Platform.OS);
+      console.log('Connection type: ', state.type);
+      console.log('Is connected? : ', state.isConnected);
       setTimeout(() => {
         if (state.isConnected) {
           this.getData();
