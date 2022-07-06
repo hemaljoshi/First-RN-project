@@ -22,6 +22,4 @@ const CustomStatusBar: React.FC<props> = ({backgroundColor, barStyle}) => {
   );
 };
 
-export default (props: props) => {
-  return <CustomStatusBar {...props} />;
-};
+export default CustomStatusBar;
